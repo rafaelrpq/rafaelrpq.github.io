@@ -14,6 +14,7 @@ header {
     width: 100%;
     padding-left: 15px;
     border-bottom: 1px outset #333;
+    text-shadow: 1px 1px 0px #000 ;
     user-select: none;
     position: fixed;
     z-index:1;
