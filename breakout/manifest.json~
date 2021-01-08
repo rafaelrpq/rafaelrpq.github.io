@@ -1,0 +1,17 @@
+{
+    "name": "Page under [des]construction",
+    "short_name": "Page under [des]construction",
+    "icons": [{
+        "src": "./images/logo192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    },{
+        "src": "./images/logo512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+    }],
+    "start_url": "./",
+    "background_color": "#333",
+    "theme_color": "#333",
+    "display": "standalone"
+}
