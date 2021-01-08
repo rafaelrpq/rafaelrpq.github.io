@@ -57,18 +57,19 @@
                 width: 100px;
                 border-radius: 60px;
                 background: #a00;
-                border: 2px solid #eee;
-                color: #fff;
+                border: 2px solid;
+                color: #600;
                 user-select: none;
                 outline: none;
                 box-shadow: 5px 5px 3px rgba(0,0,0,0.5);
                 font-family: Roboto Mono;
+                text-shadow: 0px 0px 2px #fff;
             }
 
             div[controls ] button:focus {
                 outline: none;
             }
-            
+
             div[controls ] button:active {
                 box-shadow: none;
                 background: #800;
@@ -151,6 +152,10 @@
                     display: inline;
                 }
             }
+
+            .material-icons.md-72 { 
+                font-size: 80px;
+            }
         </style>
     <head>
     <body>
@@ -161,10 +166,10 @@
         </div>
         <div controls>
             <button>
-                <span class="material-icons">keyboard_arrow_left</span>
+                <span class="material-icons md-72">arrow_left</span>
             </button>
             <button>
-                <span class="material-icons">keyboard_arrow_right</span>
+                <span class="material-icons md-72">arrow_right</span>
             </button>
             <audio>
             </audio>
