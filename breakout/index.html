@@ -59,7 +59,7 @@
                 display: none;
             }
 
-            div[controls] button {
+            div[controls] button.pad {
                 display: none;
                 height: 100px;
                 width: 100px;
@@ -74,11 +74,11 @@
                 text-shadow: 0px 0px 2px #fff;
             }
 
-            div[controls ] button:focus {
+            div[controls] button:focus {
                 outline: none;
             }
 
-            div[controls ] button:active {
+            div[controls] button:active {
                 box-shadow: none;
                 background: #800;
             }
@@ -87,6 +87,21 @@
                 display: none;
             }
 
+            div[controls] button.pause {
+                display: none;
+                border: 1px solid ;
+                border-radius : 10px;
+                height: 20px;
+                width: 60px;
+                transform: rotate(310deg);
+                background: #888;
+                box-shadow: 0px 5px 3px rgba(0,0,0,0.5);
+            }
+
+            div[controls] button:active {
+                box-shadow: none;
+                background: #666;
+            }
 
             @media only screen and (max-device-width: 1000px) and (orientation: landscape) {
                 body {
@@ -115,10 +130,15 @@
                     display: flex;
                 }
 
-                div[controls] button {
+                div[controls] button.pad {
                     display: block;
                     position: absolute;
                     top: calc(50% - 50px);
+                }
+
+                div[controls] button.pause {
+                    display: inline;
+                    margin-left: 100px;
                 }
 
                 div[controls] button:nth-child(1){
@@ -156,23 +176,8 @@
                     align-items: center;
                 }
 
-                div[controls] button {
+                div[controls] button.pad, div[controls] button.pause {
                     display: inline;
-                }
-
-                legend {
-                    border: 1px solid ;
-                    border-radius : 10px;
-                    height: 20px;
-                    width: 60px;
-                    transform: rotate(310deg);
-                    background: #888;
-                    box-shadow: 0px 5px 3px rgba(0,0,0,0.5);
-                }
-                
-                legend:active {
-                    box-shadow: none;
-                    background: #666;
                 }
             }
 
@@ -188,12 +193,11 @@
             <canvas height="500" width="500"></canvas>
         </div>
         <div controls>
-            <button>
+            <button class="pad">
                 <i class="material-icons md-72">arrow_left</i>
             </button>
-            <legend>
-            </legend>
-            <button>
+            <button class="pause">&nbsp;</button>
+            <button class="pad">
                 <i class="material-icons md-72">arrow_right</i>
             </button>
             <audio>
@@ -270,7 +274,7 @@
                    //console.log ('pressing '+event.key)
                }
 
-               button = document.querySelectorAll('button');
+               button = document.querySelectorAll('.pad');
 
                button[0].onmousedown = function () {
                    base.pressingLeft = true;
@@ -314,7 +318,7 @@
                    return false;
                };
 
-               document.querySelector('legend').ontouchstart = function  ( ){
+               document.querySelector('.pause').ontouchstart = function  ( ){
                    if (running) {
                        if (!paused){
                            clearInterval (gameLoop);
