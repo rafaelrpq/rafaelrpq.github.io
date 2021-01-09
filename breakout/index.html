@@ -125,7 +125,7 @@
                     left: 20px;
                 }
 
-                div[controls] button:nth-child(2){
+                div[controls] button:nth-child(3){
                     right: 20px;
                 }
             }
@@ -156,12 +156,27 @@
                     align-items: center;
                 }
 
-                div[controls ] button {
+                div[controls] button {
                     display: inline;
+                }
+
+                legend {
+                    border: 1px solid ;
+                    border-radius : 10px;
+                    height: 20px;
+                    width: 60px;
+                    transform: rotate(310deg);
+                    background: #888;
+                    box-shadow: 0px 5px 3px rgba(0,0,0,0.5);
+                }
+                
+                legend:active {
+                    box-shadow: none;
+                    background: #666;
                 }
             }
 
-            .material-icons.md-72 { 
+            .material-icons.md-72 {
                 font-size: 80px;
             }
         </style>
@@ -174,10 +189,12 @@
         </div>
         <div controls>
             <button>
-                <span class="material-icons md-72">arrow_left</span>
+                <i class="material-icons md-72">arrow_left</i>
             </button>
+            <legend>
+            </legend>
             <button>
-                <span class="material-icons md-72">arrow_right</span>
+                <i class="material-icons md-72">arrow_right</i>
             </button>
             <audio>
             </audio>
@@ -285,17 +302,34 @@
 
                button[0].oncontextmenu = function(event) {
                    event.preventDefault();
-                   event.stopPropagation(); // not necessary in my case, could leave in case stopImmediateProp isn't available?
+                   event.stopPropagation();
                    event.stopImmediatePropagation();
                    return false;
                };
 
                button[1].oncontextmenu = function(event) {
                    event.preventDefault();
-                   event.stopPropagation(); // not necessary in my case, could leave in case stopImmediateProp isn't available?
+                   event.stopPropagation();
                    event.stopImmediatePropagation();
                    return false;
                };
+
+               document.querySelector('legend').ontouchstart = function  ( ){
+                   if (running) {
+                       if (!paused){
+                           clearInterval (gameLoop);
+                           paused = true;
+                           dropShadow (2,2,5,'#666')
+                           ctx.fillText ('[ PAUSE ]', 200, 250);
+
+                       } else {
+                           gameLoop = setInterval (update, 1000/60)
+                           paused = false;
+                       }
+                   } else {
+                       return;
+                   }
+               }
 
                document.onkeyup = function () {
                    switch (event.key) {
