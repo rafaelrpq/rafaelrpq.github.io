@@ -14,7 +14,7 @@ document.addEventListener ('DOMContentLoaded', function (){
         ctx.restore();
     }
 
-    print ('[ GAME ]', 210, 250);
+    print ('[ GAME ]', 200, 250);
 
     start = document.querySelector('start button');
 
