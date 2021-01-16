@@ -86,7 +86,7 @@ joy.ontouchstart = function (e) {
         //     controller.stick = {'x':x,'y':y};
         // }
         d = Math.sqrt (x**2 + y**2);
-        if ( d**2 < (32)**2) {
+        if ( d**2 <= (32)**2) {
             controller.stick = {'x':x,'y':y};
             joy.style.transform='translate3d('+x+'px,'+y+'px,0)';
         }
