@@ -8,16 +8,13 @@ document.addEventListener ('DOMContentLoaded', function (){
 
     print = function (txt, x, y) {
         ctx.save();
-        ctx.fillStyle = '#ddd'
+        ctx.fillStyle = '#333'
         ctx.font = '40px VT323';
         ctx.fillText (txt, x, y);
         ctx.restore();
     }
 
-    ctx.fillStyle='#333';
-    ctx.clearRect (0,0,500,500);
-
-    print ('Teste 2', 215, 250);
+    print ('[ GAME ]', 215, 250);
 
     start = document.querySelector('start button');
 
