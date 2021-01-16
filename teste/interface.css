@@ -1,6 +1,7 @@
 html {
     font-display: swap;
     overflow: hidden;
+    /*touch-action: none;*/
     user-select: none;
 }
 
@@ -11,7 +12,7 @@ body {
     width: 100vw;
     margin: 0px;
     grid-template-areas: 'screen' 'controls';
-    touch-action: none;
+    /*touch-action: none;*/
     user-select: none;
 }
 
