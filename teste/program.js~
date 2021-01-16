@@ -1,8 +1,0 @@
-canvas = document.querySelector ('canvas')
-ctx    = canvas.getContext('2d')
-ctx.font = '30px VT323';
-
-
-loop = setInterval (function () {
-    /
-}, 1000/60)
