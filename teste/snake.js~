@@ -8,19 +8,15 @@ var snakeList, foodList, direction, eaten, gameLoop, score, running = false, pau
 
 // ctx.font = '20px Roboto Mono';
 
-ctx.font = '30px VT323';
-highscore = localStorage.getItem ('highscore') ?? 0;
-ctx.fillText ('High Score: '+ String(highscore).padStart(5,0),150,25);
-
 ctx.save()
 ctx.fillStyle = 'green'
 ctx.font = '300px VT323';
-ctx.fillText ('S',110, 300);
+ctx.fillText ('S',80, 300);
 ctx.restore()
 
 
 ctx.font = '100px VT323';
-ctx.fillText ('NAKE',215, 250);
+ctx.fillText ('NAKE',200, 250);
 
 ctx.font = '30px VT323';
 ctx.fillText ('[  Press  Start  ]',145, 450);
@@ -225,7 +221,6 @@ isGameOver = function () {
             ctx.fillText ('[ Restart Game? ]', 130, 250)
             ctx.restore ()
             running = false
-            localStorage.setItem ('highscore', highscore);
             return true;
         }
     }
@@ -268,11 +263,9 @@ updateSnakePosition = function () {
         }
         snakeList.unshift ({x: new_x, y: new_y});
         score+=1;
-        if (score >= highscore) highscore = score;
     }
 
-    ctx.fillText ('Score: '+String(score).padStart(5,' '), 25,25)
-    ctx.fillText ('High: '+String(highscore).padStart(5,' '), 350,25)
+    ctx.fillText ('Score: '+score, 23,25)
 
     // check localStorage to highscore
 
