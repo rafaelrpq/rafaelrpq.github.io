@@ -37,40 +37,41 @@ var food = {
     color  : 'orange'
 }
 
-// document.onkeydown = function (event) {
+document.onkeydown = function (event) {
 
-//     switch (event.key) {
-//         case 'ArrowLeft' :
-//             if (direction != 2) direction = 0;
-//         break;
-//         case 'ArrowUp' :
-//             if (direction != 3) direction = 1;
-//         break;
-//         case 'ArrowRight' :
-//             if (direction != 0) direction = 2;
-//         break;
-//         case 'ArrowDown' :
-//             if (direction != 1) direction = 3;
-//         break;
-//         default:
-//             if (!isGameOver()){
-//                 if (!pause){
-//                     ctx.save();
-//                     ctx.fillStyle = 'white'
-//                     ctx.fillText ('[     PAUSE     ]',132, 252);
-//                     ctx.restore();
-//                     ctx.fillText ('[     PAUSE     ]',130, 250);
-//                     clearInterval (gameLoop);
-//                     direction = null;
-//                     pause = true;
-//                 } else {
-//                     pause = false;
-//                     gameLoop = setInterval (updateSnakePosition, fps (60));
-//                 }
-//             }
-//     }
-//     // console.log (event.key+' '+direction)
-// }
+    switch (event.key) {
+        case 'ArrowLeft' :
+            if (direction != 2) direction = 0;
+        break;
+        case 'ArrowUp' :
+            if (direction != 3) direction = 1;
+        break;
+        case 'ArrowRight' :
+            if (direction != 0) direction = 2;
+        break;
+        case 'ArrowDown' :
+            if (direction != 1) direction = 3;
+        break;
+        case ' ':
+            if (!running) {
+                startGame()
+            } else {
+                if (!isGameOver()) {
+                    if (!pause){
+                        ctx.fillText ('[     PAUSE     ]',130, 250);
+                        clearInterval (gameLoop);
+                        direction = null;
+                        pause = true;
+                    } else {
+                        pause = false;
+                        gameLoop = setInterval (updateSnakePosition, fps (60));
+                    }
+                }
+            }
+        break;
+    }
+    // console.log (event.key+' '+direction)
+}
 
 document.ontouchmove = function (event) {
     if (controller.stick['x'] < -20 && (controller.stick['y'] > -10 || controller.stick['y'] < 10))
