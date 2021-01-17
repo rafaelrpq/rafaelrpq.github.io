@@ -7,19 +7,8 @@ var HEIGHT = 500;
 var snakeList, foodList, direction, eaten, gameLoop, score, running = false, pause = false;
 
 // ctx.font = '20px Roboto Mono';
-
-ctx.save()
-ctx.fillStyle = 'green'
-ctx.font = '300px VT323';
-ctx.fillText ('S',80, 300);
-ctx.restore()
-
-
-ctx.font = '100px VT323';
-ctx.fillText ('NAKE',200, 250);
-
 ctx.font = '30px VT323';
-ctx.fillText ('[  Press  Start  ]',145, 450);
+ctx.fillText ('[  Press  Start  ]',130, 250);
 
 var snakeBody = {
     width  : 20,
@@ -69,13 +58,13 @@ var food = {
 // }
 
 document.ontouchmove = function (event) {
-    if (controller.stick['x'] < -20 && (controller.stick['y'] > -10 || controller.stick['y'] < 10))
+    if (controller.stick['x'] < -20)
         if (direction != 2) direction = 0;
-    if (controller.stick['y'] < -20 && (controller.stick['x'] > -10 || controller.stick['x'] < 10))
+    if (controller.stick['y'] < -20)
         if (direction != 3) direction = 1;
-    if (controller.stick['x'] > 20 && (controller.stick['y'] > -10 || controller.stick['y'] < 10))
+    if (controller.stick['x'] > 20)
         if (direction != 0) direction = 2;
-    if (controller.stick['y'] > 20 && (controller.stick['x'] > -10 || controller.stick['x'] < 10))
+    if (controller.stick['y'] > 20)
         if (direction != 1) direction = 3;
 }
 
@@ -97,15 +86,6 @@ document.ontouchstart = function (event) {
             }
         }
     }
-
-    if (controller.btnY)
-        if (direction != 2) direction = 0;
-    if (controller.btnX)
-        if (direction != 3) direction = 1;
-    if (controller.btnA)
-        if (direction != 0) direction = 2;
-    if (controller.btnB)
-        if (direction != 1) direction = 3;
 }
 
 drawSnake = function (sb, i) {
@@ -218,7 +198,7 @@ isGameOver = function () {
             ctx.fillText ('[   GAME OVER   ]', 130, 220)
 
             ctx.fillStyle = 'red'
-            ctx.fillText ('[ Restart Game? ]', 130, 250)
+            ctx.fillText ('[ Click to Restart ]', 113, 250)
             ctx.restore ()
             running = false
             return true;
