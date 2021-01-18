@@ -10,12 +10,18 @@
         <meta charset="utf-8">
         <title>dpad teste</title>
         <style>
+            html {
+                user-select: none;
+                overflow: hidden;
+            }
+
             body {
                 display : flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 font-family: open sans;
+                user-select: none;
             }
 
             span {
@@ -31,16 +37,16 @@
                 grid-template-areas: 'button button button' 'button button button' 'button button button';
                 border: 1px solid rgba(100,100,100,0.5);
                 box-shadow: 1px 1px 2px inset rgba(0,0,0,0.5);
-                height: 90px;
-                width: 90px;
+                height: 120px;
+                width: 120px;
                 border-radius: 90px;
                 overflow: hidden;
                 padding: 5px;
             }
 
             dpad button {
-                height: 30px;
-                width: 30px;
+                height: 40px;
+                width: 40px;
                 box-shadow: 2px 2px 3px rgba(0,0,0,0.4);
                 border-radius: 0px;
                 border-style: outset;
@@ -128,10 +134,7 @@
                 content: '\25EF';
             }
 
-            dpad button:active {
-                box-shadow: none;
-                background: #888;
-            }
+
 
             .btnPressed {
                 box-shadow : none;
@@ -183,6 +186,10 @@
             </span>
         </div>
         <script>
+            function round (x, lim) {
+                return (Math.abs (x) >= lim ? (x > 0 ? Math.ceil (x) : Math.floor(x)) : 0)
+            }
+
             var x,y,x_,y_;
             dpad = document.querySelector ('dpad')
 
@@ -198,10 +205,11 @@
                     h = (dpad.clientHeight)/2;
                     w = (dpad.clientWidth)/2;
 
+
                     initialX = (e.touches[0].clientX) - l;
                     initialY = parseInt (e.touches[0].clientY - t);
-                    offSetX  = Math.round ((initialX) / w) - 1;
-                    offSetY  = Math.round ((initialY) / h) - 1;
+                    offSetX  = round ((initialX / h) - 1, 0.35);
+                    offSetY  = round ((initialY / h) - 1, 0.35);
                     //console.log (`initialX: ${initialX}\ninitialY: ${initialY}`)
                     text[0].value = `x: ${offSetX}\ny: ${offSetY}`;
 
@@ -238,8 +246,8 @@
                     this.ontouchmove = function (e) {
                         x= (((e.touches[0].clientX) - l) / w).toFixed (3) - 1;
                         y= (((e.touches[0].clientY) - t) / h).toFixed (3) - 1;
-                        x_= Math.round (((e.touches[0].clientX) - l) / w) - 1;
-                        y_= Math.round (((e.touches[0].clientY) - t) / h) - 1;
+                        x_= round (((e.touches[0].clientX) - l) / w - 1, 0.35);
+                        y_= round (((e.touches[0].clientY) - t) / h - 1, 0.35);
 
                         text[1].value = `x: ${x}\ny: ${y}`
                         text[2].value = `x: ${x_}\ny: ${y_}`
