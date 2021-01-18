@@ -207,7 +207,6 @@ controls {
             justify-content: space-around;
             align-items: center;
             background: #aaa;
-            display: block;
         }
 
         buttons {
