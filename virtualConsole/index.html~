@@ -297,7 +297,7 @@
                 opt: ['Sim', 'Não'],
             }
             resetAlert = function () {
-
+                
                 if (controller.reset) {
                     w = 600
                     h = 200
@@ -324,6 +324,10 @@
                     ctx.fillStyle = (!opt) ? '#fff' : '#000';
                     ctx.fillText ('Não',l+20,t+35)
 
+                    ctx.fillStyle = (opt) ? '#fff' : '#000';
+                    ctx.fillText ('Sim',l+200,t+35)
+                    ctx.fillText (opt,l+100,t-10)
+
                     if (controller.dpad.left) {
                         start=false;
                         opt=false;
@@ -335,7 +339,7 @@
                     }
 
                     if (controller.start && opt) {
-                        location.href = './'
+                        location.reload()
                     }
                 }
             }
