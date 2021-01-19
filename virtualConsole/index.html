@@ -291,14 +291,20 @@
 
             ctx.font = "30px Roboto Mono";
 
-            function message () {
-                reset.ontouchstart = function () {
+            opt = false
+
+            menu = {
+                opt: ['Sim', 'Não'],
+            }
+            resetAlert = function () {
+                
+                if (controller.reset) {
                     w = 600
                     h = 200
                     l = 100
                     t = 200
 
-                    // clearInterval (loop)
+                    ctx.lineCap = "round"
                     ctx.lineWidth = 10;
                     ctx.strokeRect (l,t,w,h);
                     ctx.fillStyle = 'rgba(255,100,0,0.7)';
@@ -306,7 +312,46 @@
                     ctx.fillStyle = '#000';
                     ctx.fillText ('Deseja reinciar a aplicação?',l+50,t+50)
 
+                    w = 100
+                    h = 50
+                    l = 250
+                    t = 320
+                    ctx.lineWidth = 1;
+                    ctx.strokeStyle = '#fff';
+                    //ctx.strokeRect (l,t,w,h);
+                    //ctx.fillStyle = 'rgba(50,0,255,1)';
+                    //ctx.fillRect (l,t,w,h);
+                    ctx.fillStyle = (!opt) ? '#fff' : '#000';
+                    ctx.fillText ('Não',l+20,t+35)
+
+                    ctx.fillStyle = (opt) ? '#fff' : '#000';
+                    ctx.fillText ('Sim',l+200,t+35)
+                    ctx.fillText (opt,l+100,t-10)
+
+                    if (controller.dpad.left) {
+                        start=false;
+                        opt=false;
+                    }
+
+                    if (controller.dpad.right) {
+                        controller.start=false
+                        opt=true
+                    }
+
+                    if (controller.start && opt) {
+                        location.reload()
+                    }
                 }
+            }
+
+            reset.ontouchstart = function () {
+                controller.start = false;
+                controller.reset = (controller.reset) ? false : true;
+            }
+
+            start.ontouchstart = function () {
+                controller.start =  (controller.start) ? false : true;
+                console.log (controller.start)
             }
 
             loop = setInterval (function () {
@@ -321,7 +366,7 @@
                     y+=30;
                 }
 
-                message();
+                resetAlert()
 
             }, 1000/60)
 
