@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+        <meta name="theme-color" content="#333"/>
+         <meta property="og:type" content="website" />
+         <meta property="og:description" content="implementação de um dpad para jogos em html" />
+         <meta property="og:title" content="dpad teste" />
+         <meta property="og:url" content="https://rafaelrpq.github.io/teste/dpad.html" />
+        <meta charset="utf-8">
+        <title>dpad teste</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=VT323&display=swap');
+            html {
+                user-select : none;
+                overflow    : hidden;
+            }
+
+            body {
+                display         : flex;
+                flex-direction  : row;
+                justify-content : center;
+                align-items     : center;
+                font-family     : open sans;
+                user-select     : none;
+                /*height          : 100vh;*/
+                background: #333;
+            }
+
+            div {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                /*background: #ff0*/
+            }
+
+
+            div:nth-child(1) {
+                justify-content: flex-start;
+                display: none;
+            }
+
+            div:nth-child(3) {
+                justify-content: flex-end;
+                display: none;
+            }
+
+            canvas {
+                width: 100%;
+                border: 5px double #666;
+                border-radius: 7px;
+                background: #ddd;
+                image-rendering: pixelated;
+                image-rendering: crisp-edges;
+            }
+
+            span {
+                display: none;
+            }
+
+            dpad, triggers {
+                display: grid;
+                grid-template-areas: 'button button button' 'button button button' 'button button button';
+                border: 1px solid rgba(100,100,100,0.5);
+                box-shadow: 1px 1px 2px inset rgba(0,0,0,0.5);
+                height: 120px;
+                width: 120px;
+                border-radius: 90px;
+                overflow: hidden;
+                padding: 5px;
+            }
+
+            dpad button, triggers button, span button {
+                height: 40px;
+                width: 40px;
+                box-shadow: 2px 2px 3px rgba(0,0,0,0.4);
+                border-radius: 0px;
+                border-style: outset;
+                border-color: rgba(0,0,0,0.3);
+                border-width: 2px;
+                outline: none;
+                color: rgba(100,100,100,1);
+                font-size: 16px;
+                background: #aaa;
+                text-shadow :  1px  0px 0px rgba(0,0,0,0.3),
+                               0px  1px 0px rgba(0,0,0,0.3),
+                              -1px  0px 0px rgba(0,0,0,0.3),
+                               0px -1px 0px rgba(0,0,0,0.3);
+            }
+
+            dpad null {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #666;
+            }
+
+            triggers button {
+                border-radius: 90px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+                font-size: 13px;
+            }
+
+            dpad button:nth-child(2) {
+                border-bottom: 0px;
+                border-radius: 5px 5px 0 0;
+            }
+            dpad button:nth-child(2):before {
+                content: '\25B2';
+            }
+
+            dpad button:nth-child(4) {
+                border-right: 0px;
+                border-radius: 5px 0 0 5px;
+            }
+
+            dpad button:nth-child(4):before {
+                content: '\25C0'
+            }
+
+            dpad button:nth-child(6) {
+                border-left: 0px;
+                border-radius: 0 5px 5px 0;
+            }
+
+            dpad button:nth-child(6):before {
+                content: '\25B6'
+            }
+
+            dpad button:nth-child(8) {
+                border-top: 0px;
+                border-radius: 0 0 5px 5px;
+            }
+
+            dpad button:nth-child(8):before {
+                content: '\25BC'
+            }
+
+            dpad button:nth-child(8):before {
+                content: '\25BC'
+            }
+
+            /***** diagonais *****
+            dpad null:nth-child(1):before {
+                /*content: '\25F8'*
+                content: '\25E4'
+            }
+            dpad null:nth-child(3):before {
+                /*content: '\25F9'*
+                content: '\25E5'
+            }
+            dpad null:nth-child(2):before {
+                /*content: '\25FA'*
+                content: '\25E3'
+            }
+            dpad null:nth-child(4):before {
+                /*content: '\25FF'*
+                content: '\25E2'
+            }*/
+
+            dpad null:nth-child(1), dpad null:nth-child(2), dpad null:nth-child(3), dpad null:nth-child(4) {
+                background: none;
+                box-shadow: none;
+                border-style: none;
+                font-size: 10px;
+                pointer-events: none;
+            }
+            dpad button[disabled] {
+                border: 0px;
+                box-shadow: 0 0 0 rgba(0,0,0,0);
+            }
+            dpad button[disabled]:before{
+                content: '\25EF';
+            }
+
+            .btnPressed {
+                box-shadow : none;
+                filter : brightness(0.7);
+            }
+
+            triggers button#btnX {
+                background: #00f;
+            }
+
+            triggers button#btnB {
+                background: #fa0;
+            }
+
+            triggers button#btnY {
+                background: #0a0;
+            }
+
+            triggers button#btnA {
+                background: #f00;
+            }
+
+            @media (pointer:none), (pointer:coarse) {
+                @media screen and (orientation : landscape) {
+                    html {
+                        user-select : none;
+                        overflow    : hidden;
+                        touch-events: none;
+                    }
+
+                    body {
+                        display: grid;
+                        flex-direction: row;
+                        grid-template-areas: 'dpad screen triggers' 'reset start null';
+                        grid-template-columns: 0.7fr 1fr 0.7fr;
+                        grid-template-rows: 12fr 2fr;
+                        align-items: center;
+                        overflow    : auto;
+                    }
+
+                    div:nth-child(1) {
+                        display: flex;
+                    }
+
+                    div:nth-child(3) {
+                        display: flex;
+                    }
+
+                    canvas {
+                        width: 95%;
+                    }
+
+                    span {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 10px;
+                    }
+
+                    span button {
+                        height: 25px;
+                        width: 80px;
+                        border-radius: 45px;
+                        color: #fff;
+                    }
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <dpad>
+               <null></null>
+               <button id="btnUP"></button>
+               <null></null>
+
+               <button id="btnLEFT"></button>
+               <button disabled></button>
+               <button id="btnRIGHT"></button>
+
+               <null></null>
+               <button id="btnDOWN"></button>
+               <null></null>
+            </dpad>
+        </div>
+        <div>
+            <canvas height="600" width="800"/>
+        </div>
+        <div>
+            <triggers>
+               <null></null>
+               <button id="btnX">X</button>
+               <null></null>
+
+               <button id="btnY">Y</button>
+               <null></null>
+               <button id="btnA">A</button>
+
+               <null></null>
+               <button id="btnB">B</button>
+               <null></null>
+            </triggers>
+        </div>
+        <span>
+            <button>RESET</button>
+        </span>
+        <span>
+            <button>START</button>
+        </span>
+        <script src='engine.js'></script>
+        <script>
+            canvas = document.querySelector ('canvas');
+            ctx = canvas.getContext ('2d');
+
+            ctx.font = "30px Roboto Mono";
+
+            function message () {
+                reset.ontouchstart = function () {
+                    w = 600
+                    h = 200
+                    l = 100
+                    t = 200
+
+                    // clearInterval (loop)
+                    ctx.lineWidth = 10;
+                    ctx.strokeRect (l,t,w,h);
+                    ctx.fillStyle = 'rgba(255,100,0,0.7)';
+                    ctx.fillRect (l,t,w,h);
+                    ctx.fillStyle = '#000';
+                    ctx.fillText ('Deseja reinciar a aplicação?',l+50,t+50)
+
+                }
+            }
+
+            loop = setInterval (function () {
+
+                ctx.fillStyle = '#666';
+                ctx.fillRect (0,0,800,600)
+                ctx.fillStyle = '#ddd';
+
+                y = 50;
+                for (dir in controller.dpad) {
+                    ctx.fillText (String (dir).padEnd (5,' ')+' : '+controller.dpad[dir],20, y)
+                    y+=30;
+                }
+
+                message();
+
+            }, 1000/60)
+
+            //clearInterval (loop)
+
+
+        </script>
+    </body>
+</html>
