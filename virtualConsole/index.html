@@ -324,6 +324,9 @@
                     ctx.fillStyle = (!opt) ? '#fff' : '#000';
                     ctx.fillText ('Não',l+20,t+35)
 
+                    ctx.fillStyle = (opt) ? '#fff' : '#000';
+                    ctx.fillText ('Sim',l+200,t+35)
+
                     if (controller.dpad.left) {
                         start=false;
                         opt=false;
@@ -347,7 +350,7 @@
 
             start.ontouchstart = function () {
                 controller.start =  (controller.start) ? false : true;
-                console.log (controller.start)
+                //console.log (controller.start)
             }
 
             loop = setInterval (function () {
